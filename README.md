@@ -54,10 +54,20 @@ Write content in `src/index.md` using basic markdown:
 
 ### Development
 
-To build and serve locally:
+To build and serve locally, first build the site:
 
 ```bash
-npm run dev
+npm run build
+```
+
+Then serve the `dist/` directory with any static file server, for example:
+
+```bash
+# Using Python
+python3 -m http.server 8080 --directory dist
+
+# Or using Node.js http-server (install globally: npm install -g http-server)
+http-server dist -p 8080
 ```
 
 Then visit http://localhost:8080

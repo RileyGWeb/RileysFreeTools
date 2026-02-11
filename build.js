@@ -76,6 +76,10 @@ function build() {
       }
       
       if (inCodeBlock) {
+        // Escape HTML entities to prevent injection
+        line = line.replace(/&/g, '&amp;')
+                   .replace(/</g, '&lt;')
+                   .replace(/>/g, '&gt;');
         html.push(line);
         continue;
       }
@@ -104,8 +108,9 @@ function build() {
           inList = true;
         }
         let listContent = line.substring(2);
+        // Process inline formatting (bold before italic to avoid conflicts)
         listContent = listContent.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-        listContent = listContent.replace(/\*(.+?)\*/g, '<em>$1</em>');
+        listContent = listContent.replace(/\*(?!\*)(.+?)(?<!\*)\*/g, '<em>$1</em>');
         html.push(`<li>${listContent}</li>`);
         continue;
       } else if (inList) {
@@ -119,8 +124,9 @@ function build() {
       }
       
       // Regular paragraphs
+      // Process inline formatting (bold before italic to avoid conflicts)
       line = line.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-      line = line.replace(/\*(.+?)\*/g, '<em>$1</em>');
+      line = line.replace(/\*(?!\*)(.+?)(?<!\*)\*/g, '<em>$1</em>');
       html.push(`<p>${line}</p>`);
     }
     
