@@ -1,0 +1,12 @@
+{
+  "name": "rileys-free-tools",
+  "version": "1.0.0",
+  "description": "Riley's Free Tools - A simple static site",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "keywords": ["static-site"],
+  "author": "Riley",
+  "license": "MIT",
+  "devDependencies": {}
+}
